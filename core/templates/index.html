@@ -1,11 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>{{ curso }}</h1>
-</body>
+    <center>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produto %}
+            <tr>
+                <td><a href="{% url 'produto' produto.pk %}"> {{ produto.nome }} </a></td>
+                <td>{{ produto.preco }}</td>
+                <td>{{ produto.quantidade }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Nenhum produto disponível.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button onclick="teste();">Clique-me</button>
+</center>
+    <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+</body> 
 </html>
