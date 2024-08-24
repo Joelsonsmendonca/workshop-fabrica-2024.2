@@ -1,23 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GitHub User Info</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub User Details</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>GitHub User Info</h1>
-    <form method="get">
-        <label for="username">GitHub Username:</label>
-        <input type="text" id="username" name="username">
-        <button type="submit">Search</button>
-    </form>
-    {% if data %}
-        <h2>{{ data.name }}</h2>
-        <p>Bio: {{ data.bio }}</p>
-        <p>Location: {{ data.location }}</p>
-        <p>Followers: {{ data.followers }}</p>
-        <p>Following: {{ data.following }}</p>
-    {% elif error %}
-        <p>{{ error }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>GitHub User Details</h1>
+        <form method="get" class="form-inline">
+            <input type="text" name="username" class="form-control" placeholder="Enter GitHub Username">
+            <button type="submit" class="btn">Search</button>
+        </form>
+        {% if data %}
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ data.login }}</h2>
+            </div>
+            <div class="card-body">
+                <img src="{{ data.avatar_url }}" class="avatar" alt="Avatar">
+               <center> <p><strong>ID:</strong> {{ data.id }}</p></center>
+                <p><strong>Followers:</strong> {{ data.followers }}</p>
+                <p><strong>Location:</strong> {{ data.location }}</p>
+                <p><strong>Node ID:</strong> {{ data.node_id }}</p>
+                <p><strong>URL:</strong> <a href="{{ data.url }}" target="_blank">{{ data.url }}</a></p>
+                <p><strong>HTML URL:</strong> <a href="{{ data.html_url }}" target="_blank">{{ data.html_url }}</a></p>
+                <p><strong>Followers URL:</strong> <a href="{{ data.followers_url }}" target="_blank">{{ data.followers_url }}</a></p>
+                <p><strong>Following URL:</strong> <a href="{{ data.following_url }}" target="_blank">{{ data.following_url }}</a></p>
+                <p><strong>Gists URL:</strong> <a href="{{ data.gists_url }}" target="_blank">{{ data.gists_url }}</a></p>
+                <p><strong>Starred URL:</strong> <a href="{{ data.starred_url }}" target="_blank">{{ data.starred_url }}</a></p>
+                <p><strong>Subscriptions URL:</strong> <a href="{{ data.subscriptions_url }}" target="_blank">{{ data.subscriptions_url }}</a></p>
+                <p><strong>Organizations URL:</strong> <a href="{{ data.organizations_url }}" target="_blank">{{ data.organizations_url }}</a></p>
+                <p><strong>Repos URL:</strong> <a href="{{ data.repos_url }}" target="_blank">{{ data.repos_url }}</a></p>
+                <p><strong>Events URL:</strong> <a href="{{ data.events_url }}" target="_blank">{{ data.events_url }}</a></p>
+                <p><strong>Received Events URL:</strong> <a href="{{ data.received_events_url }}" target="_blank">{{ data.received_events_url }}</a></p>
+                <p><strong>Type:</strong> {{ data.type }}</p>
+                <p><strong>Site Admin:</strong> {{ data.site_admin }}</p>
+            </div>
+        </div>
+        {% elif error %}
+        <div class="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
