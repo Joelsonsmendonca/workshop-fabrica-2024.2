@@ -1,32 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+import requests
+from django.shortcuts import render
 
-from django.http import HttpResponse
-from django.template import loader
-
-from .models import Produto
-
-def index(request):
-    produtos = Produto.objects.all()
-    context = {
-        'produto': produtos, 
-    }
-    return render(request, 'index.html', context)
-
-def contato(request):
-    return render(request, 'contato.html')
-
-def produto(request, pk):
-    #prod = Produto.objects.get(id=pk)
-    prod = get_object_or_404(Produto, id=pk)
-    context = {
-        'produto': prod
-    }
-    return render(request, 'produto.html', context)
-
-def error_404(request, ex):
-    template = loader.get_template('404.html')
-    return HttpResponse(content=template.render(), content_type='text/html; charset=utf-8', status=404)
-
-def error_500(request):
-    template = loader.get_template('500.html')
-    return HttpResponse(content=template.render(), content_type='text/html; charset=utf-8', status=500)
+def github_user(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        if username:
+            url = f'https://api.github.com/users/{username}'
+            response = requests.get(url)
+            data = response.json()
+            if response.status_code == 200:
+                return render(request, 'github_user.html', {'data': data})
+            else:
+                return render(request, 'github_user.html', {'error': 'User not found'})
+        return render(request, 'github_user.html')
